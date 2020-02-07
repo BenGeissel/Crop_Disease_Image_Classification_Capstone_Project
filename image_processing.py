@@ -52,4 +52,18 @@ def pixel_centering(norm_img_arr):
     
     return norm_img_arr
 
-
+# For ML Models
+def image_to_flat_array(image_loc):
+    '''
+    Function to convert every image into (196608,) array
+    
+    Input: Image file path
+    
+    Output: (196608,) array representing the image pixel matrix
+    '''
+    
+    img = Image.open(image_loc)
+    arr = np.array(img)
+    flat_arr = arr.flatten()
+    
+    return flat_arr
