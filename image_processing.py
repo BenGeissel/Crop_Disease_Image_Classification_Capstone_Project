@@ -67,3 +67,5 @@ def image_to_flat_array(image_loc):
     flat_arr = arr.flatten()
     
     return flat_arr
+
+
