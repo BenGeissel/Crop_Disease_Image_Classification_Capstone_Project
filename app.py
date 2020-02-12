@@ -53,7 +53,7 @@ app.layout = html.Div(style={'backgroundColor': colors['background']}, children=
     html.Div([
         html.Label('Provide a Number Between 1 and 54304:'),
         dcc.Input(id = 'image-number', placeholder = '1',
-                  value = '1',
+                  value = None,
                   type = 'text',
                   style = {'width': '10%', 'textAlign': 'center'}),
         html.Button('Calculate', id = 'button', style = {'color': '#E71107'}),
