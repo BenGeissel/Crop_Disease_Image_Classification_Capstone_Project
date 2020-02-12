@@ -69,3 +69,21 @@ def image_to_flat_array(image_loc):
     return flat_arr
 
 
+def image_prediction(img_path, model, class_map_dict):
+    '''
+    Function to predict image class
+    
+    Input: Image file path, CNN Keras Model
+    
+    Output: Image Class Prediction
+    '''
+    
+    arr = image_to_array(img_path)
+    norm = pixel_normalization(arr)
+    final = pixel_centering(norm).reshape((1, 256, 256, 3))
+    pred = model.predict(final)
+    result_dict = dict(enumerate(pred[0]))
+    int_class = max(result_dict, key = result_dict.get)
+    crop_leaf_class = class_map_dict[int_class]
+    
+    return crop_leaf_class
