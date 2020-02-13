@@ -51,7 +51,7 @@ app.layout = html.Div(style={'backgroundColor': colors['background']}, children=
     html.Br(),
     
     html.Div([
-        html.Label('Provide a Number Between 1 and 54304:'),
+        html.Label('Provide a Number Between 1 and 54,304:'),
         dcc.Input(id = 'image-number', placeholder = '1',
                   value = None,
                   type = 'text',
@@ -64,7 +64,9 @@ app.layout = html.Div(style={'backgroundColor': colors['background']}, children=
                   html.Img(id = 'image'),
                   html.Br(),
                   html.Br(),
-                  html.Div(id = 'image-pred', style = {'fontSize' : 24})]),
+                  html.Div(id = 'image-pred', style = {'fontSize' : 24}),
+                  html.Br(),
+                  html.Div(id = 'image-correct', style = {'fontSize' : 24})]),
     html.Br(),
     html.Br(),
     html.Br(),
@@ -81,7 +83,8 @@ app.layout = html.Div(style={'backgroundColor': colors['background']}, children=
     [Output('image-number-text-confirmation', 'children'),
     Output('image-class', 'children'),
     Output('image', 'src'),
-    Output('image-pred', 'children')],
+    Output('image-pred', 'children'),
+    Output('image-correct', 'children')],
     [Input('button', 'n_clicks')],
     state = [State(component_id = 'image-number', component_property = 'value')])
 def image_function(n_clicks, input_value):
@@ -101,7 +104,7 @@ def image_function(n_clicks, input_value):
         img_int_dict = dict(zip(img_int_list, img_dict_list))
         
         # Create statement
-        statement = 'You\'ve selected image number "{}"'.format(input_value)
+        statement = 'You are viewing image number {}'.format(input_value)
         
         # Find image path based on user input number
         user_img_path = img_int_dict[input_value]['path']
@@ -125,13 +128,14 @@ def image_function(n_clicks, input_value):
         model = load_model('../crop_leaves_disease_model.h5')
         pred_class = image_processing.image_prediction(user_img_path, model, class_map_dict)
         correct = (user_img_class == pred_class)
-        pred_text = 'The Convolutional Neural Network Model predicts class: {}. This prediction is {}!'.format(pred_class, correct)
+        pred_text = 'The Convolutional Neural Network Model predicts class: {}.'.format(pred_class)
+        correct_text = 'This prediction is {}!'.format(correct)
         
-        return statement, user_img_text, image_src, pred_text
+        return statement, user_img_text, image_src, pred_text, correct_text
     
     # Error statement
     except:
-        return "Error: Please input a number between 1 and 54,304", None, None, None
+        return "Error: Please input a number between 1 and 54,304", None, None, None, None
 
 
 
